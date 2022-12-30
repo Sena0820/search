@@ -99,3 +99,4 @@ def argmin(iterable, function):
 
 def argmax(iterable, function):
     return _generic_arg(iterable, function, max)
+

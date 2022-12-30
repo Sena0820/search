@@ -220,8 +220,8 @@ def _create_genetic_expander(problem, mutation_chance):
     Creates an expander that expands the bests nodes of the population,
     crossing over them.
     '''
-    # global elite_list
-    # elite_list = []
+    '''global elite_list
+    elite_list = []'''
     def _expander(fringe, iteration, viewer): # 毎世代ごとに呼ばれる
         fitness = [x.value for x in fringe] # 遺伝子であるベクトルの配列、weightでもある
         sampler = InverseTransformSampler(fitness, fringe) # おそらく個体、objectでもある
@@ -229,8 +229,8 @@ def _create_genetic_expander(problem, mutation_chance):
         # これらのリストはこの関数呼び出す毎に初期化されている
         expanded_nodes = []
         expanded_neighbors = []
-        # elite = fringe[-1]
-        # elite_list.append(elite)
+        '''elite = fringe[0]# ここでのエラーではない
+        elite_list.append(elite)'''
 
         for _ in fringe:# 個体1個につき毎回行う、一個体にフォーカスしていることを頭に入れる
             node1 = sampler.sample() # 良く分からない、おそらく親世代から親とする個体を二つ選んでいる
@@ -257,7 +257,7 @@ def _create_genetic_expander(problem, mutation_chance):
             viewer.event('expanded', expanded_nodes, expanded_neighbors)
 
         fringe.clear() #毎回fringeをリセットしている。親世代の削除とも言える
-        # new_generation[0] == elite[0]
+        '''new_generation[0] = elite[0]　# これに対するエラー'''
         for node in new_generation:
             fringe.append(node)
             # ここで新しく子世代を親世代に変更？
