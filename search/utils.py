@@ -64,6 +64,7 @@ class InverseTransformSampler(object):
         # 今回はfitnessがweights、objectsがfringeという個体の集まり？
         assert weights and objects and len(weights) == len(objects)
         self.objects = objects
+        self.weights = weights
         tot = float(sum(weights))
         if tot == 0:
             tot = len(weights)
@@ -82,8 +83,17 @@ class InverseTransformSampler(object):
         i = 0
         while i + 1 != len(self.probs) and target > self.probs[i]:
             i += 1
-        return self.objects[i]
+        return self.objects[i] # fringeがobjects
         # 良く分からんが個体を一個返す。返す個体はランダム。だからランダム探索になっている
+
+    def best(self):
+        max_idx = 0
+        for idx,obj in enumerate(self.objects):
+            if self.weights[max_idx] < self.weights[idx]:
+                max_idx = idx
+
+        print(f"elite:{self.objects[max_idx].state}, fitness={self.weights[max_idx]}")
+        return self.objects[max_idx]
 
 
 def _generic_arg(iterable, function, better_function):
